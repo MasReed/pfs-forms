@@ -1,6 +1,8 @@
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 
+import Header from './Header'
+
 function App() {
   return (
     <Grid
@@ -8,9 +10,7 @@ function App() {
       direction='column'
       style={{ minHeight: '100vh' }}
     >
-      <header id='top'>
-        This is a header.
-      </header>
+      <Header />
 
       {/* Main Content */}
       <Grid item id='content' style={{ flex: 1 }}>
