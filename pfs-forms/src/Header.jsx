@@ -14,28 +14,27 @@ export default function Header() {
   }
 
   return (
-    <Box style={{ height: '20vh' }}>
+    <Box style={{ backgroundColor: '#bbb' }}>
       <header id='top'>
         <AppBar position='static'>
           <Toolbar>
             <Typography variant='h6'>
               Personal Financial Statement Generator
             </Typography>
-
-            <Tabs
-              value={tabValue}
-              onChange={handleTabChange}
-              indicatorColor='secondary'
-              textColor=''
-              centered
-            >
-              <Tab label='one'/>
-              <Tab label='two'/>
-              <Tab label='three'/>
-            </Tabs>
-
           </Toolbar>
         </AppBar>
+
+        <Tabs
+          value={tabValue}
+          onChange={handleTabChange}
+          indicatorColor='secondary'
+          textColor=''
+          centered
+        >
+          <Tab label='one'/>
+          <Tab label='two'/>
+          <Tab label='three'/>
+        </Tabs>
       </header>
     </Box>
   )

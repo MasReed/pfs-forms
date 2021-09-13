@@ -2,6 +2,7 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 
 import Header from './Header'
+import Footer from './Footer'
 
 function App() {
   return (
@@ -19,9 +20,7 @@ function App() {
         </Container>
       </Grid>
 
-      <footer id='bottom'>
-        This is a footer.
-      </footer>
+      <Footer />
 
     </Grid>
   );
