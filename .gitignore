@@ -2,6 +2,7 @@
 
 # Reference materials
 *.pdf
+*.txt
 
 # Logs
 logs

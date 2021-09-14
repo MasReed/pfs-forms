@@ -5,6 +5,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 
+import PersonalInformationForm from './PersonalInformationForm'
+
 export default function FormDisplay() {
   const [tabValue, setTabValue] = useState(0)
 
@@ -22,20 +24,17 @@ export default function FormDisplay() {
           textColor=''
           centered
         >
-          <Tab label='one'/>
-          <Tab label='two'/>
-          <Tab label='three'/>
+          <Tab label='Personal' />
+          <Tab label='Schedules' />
+          <Tab label='Review' />
+          <Tab label='Calculations' />
         </Tabs>
       </Box>
-
-      <Typography variant='h3'>BASIC INFO FORM</Typography>
 
       {
         tabValue === 0
         && (
-          <Box>
-            Page 1
-          </Box>
+          <PersonalInformationForm />
         )
       }
 
@@ -53,6 +52,15 @@ export default function FormDisplay() {
         && (
           <Box>
             Page 3
+          </Box>
+        )
+      }
+
+      {
+        tabValue === 3
+        && (
+          <Box>
+            Page 4
           </Box>
         )
       }
