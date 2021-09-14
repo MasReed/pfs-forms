@@ -1,121 +1,189 @@
 import React from 'react'
-
+import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  section: {
+    display: 'flex'
+  },
+  textField: {
+    margin: theme.spacing(2),
+  },
+}))
+
 export default function PersonalInformationForm() {
+  const classes = useStyles()
+
   return(
     <>
-      <Box>
+      <Box my={4}>
         <Typography variant='h3'>BASIC INFO FORM</Typography>
       </Box>
 
       <form noValidate autoComplete='off'>
+        <Grid
+          container
+          direction='row'
+          justifyContent='flex-start'
+          alignItems='flex-start'
+          spacing={2}
+          xs={12}
+        >
 
-        {/* NAME */}
-        <div>
-          <TextField
-            id='first-name'
-            label='First Name'
-            variant='outlined'
-            color='secondary'
-          />
+          {/* NAME */}
+          <Grid container item sm={12}>
+            <Grid item sm={4}>
+              <TextField
+                id='first-name'
+                label='First Name'
+                variant='outlined'
+                color='secondary'
+                fullWidth
+              />
+            </Grid>
 
-          <TextField
-            id='middle-name'
-            label='Middle Name'
-            variant='outlined'
-            color='secondary'
-          />
+            <Grid item sm={4}>
+              <TextField
+                id='middle-name'
+                label='Middle Name'
+                variant='outlined'
+                color='secondary'
+                fullWidth
+              />
+            </Grid>
 
-          <TextField
-            id='last-name'
-            label='Last Name'
-            variant='outlined'
-            color='secondary'
-          />
-        </div>
+            <Grid item sm={4}>
+              <TextField
+                id='last-name'
+                label='Last Name'
+                variant='outlined'
+                color='secondary'
+                fullWidth
+              />
+            </Grid>
+          </Grid>
 
-        {/* ADDRESSES */}
-        <div>
-          <TextField
-            id='primary-address'
-            label='Primary Address'
-            variant='outlined'
-            color='secondary'
-          />
+          {/* ADDRESSES */}
+          <Grid container item sm={12}>
+            <Grid item sm={4}>
+              <TextField
+                id='primary-address'
+                label='Primary Address'
+                variant='outlined'
+                color='secondary'
+                fullWidth
+              />
+            </Grid>
 
-          <TextField
-            id='personal-phone-number'
-            label='Personal Phone'
-            variant='outlined'
-            color='secondary'
-          />
+            <Grid item sm={4}>
+              <TextField
+                id='personal-phone-number'
+                label='Personal Phone'
+                variant='outlined'
+                color='secondary'
+                fullWidth
+              />
+            </Grid>
 
-          <TextField
-            id='email'
-            label='Email'
-            variant='outlined'
-            color='secondary'
-          />
-        </div>
+            <Grid item sm={4}>
+              <TextField
+                id='email'
+                label='Email'
+                variant='outlined'
+                color='secondary'
+                fullWidth
+              />
+            </Grid>
+          </Grid>
 
 
-        {/* DATES & IDS */}
-        <div>
-          <TextField
-            id='date-of-birth'
-            label='DoB'
-            variant='outlined'
-            color='secondary'
-          />
+          {/* DATES & IDS */}
+          <Grid container item sm={12}>
+            <Grid item sm={4}>
+              <TextField
+                id='date-of-birth'
+                label='DoB'
+                variant='outlined'
+                color='secondary'
+                fullWidth
+              />
+            </Grid>
 
-          <TextField
-            id='ssn'
-            label='SSN'
-            variant='outlined'
-            color='secondary'
-          />
-        </div>
+            <Grid item sm={4}>
+              <TextField
+                id='ssn'
+                label='SSN'
+                variant='outlined'
+                color='secondary'
+                fullWidth
+              />
+            </Grid>
+          </Grid>
 
-        {/* EMPLOYMENT - employer, type, */}
-        <div>
-          <TextField
-            id='employer'
-            label='Employer'
-            variant='outlined'
-            color='secondary'
-          />
+          {/* EMPLOYMENT - employer, type, */}
+          <Grid container item sm={12}>
 
-          <TextField
-            id='employment-type'
-            label='Type of Employment'
-            variant='outlined'
-            color='secondary'
-          />
+            <Grid container sm={12}>
+              <Grid container item sm={4}>
+                <TextField
+                  id='employer'
+                  label='Employer'
+                  variant='outlined'
+                  color='secondary'
+                  fullWidth
+                />
+              </Grid>
 
-          <TextField
-            id='employer-phone'
-            label='Employer Phone'
-            variant='outlined'
-            color='secondary'
-          />
+              <Grid item sm={4}>
+                <TextField
+                  id='employer-phone'
+                  label='Employer Phone'
+                  variant='outlined'
+                  color='secondary'
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
 
-          <TextField
-            id='employer-address'
-            label='Employer Address'
-            variant='outlined'
-            color='secondary'
-          />
+            <Grid container sm={12}>
+              <Grid item sm={4}>
+                <TextField
+                  id='employment-type'
+                  label='Type of Employment'
+                  variant='outlined'
+                  color='secondary'
+                  fullWidth
+                />
+              </Grid>
 
-          <TextField
-            id='employer-years-employed'
-            label='Years Employed'
-            variant='outlined'
-            color='secondary'
-          />
-        </div>
+              <Grid item sm={4}>
+                <TextField
+                  id='employer-years-employed'
+                  label='Years Employed'
+                  variant='outlined'
+                  color='secondary'
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
+
+            <Grid item sm={4}>
+              <TextField
+                id='employer-address'
+                label='Employer Address'
+                variant='outlined'
+                color='secondary'
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+        </Grid>
       </form>
     </>
   )
