@@ -1,19 +1,28 @@
 import React from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar'
 import Box from '@material-ui/core/Box'
+import Link from '@material-ui/core/Link'
 import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 
 export default function Header() {
+
+  const LinkBehavior = React.forwardRef((props, ref) => (
+    <RouterLink ref={ref} to='/' {...props} />
+  ))
 
   return (
     <Box style={{ backgroundColor: '#bbb' }}>
       <header id='top'>
         <AppBar position='static'>
           <Toolbar>
-            <Typography variant='h6'>
+            <Link
+              color='textPrimary'
+              component={LinkBehavior}
+              variant='h6'
+            >
               Personal Financial Statement Generator
-            </Typography>
+            </Link>
           </Toolbar>
         </AppBar>
       </header>
