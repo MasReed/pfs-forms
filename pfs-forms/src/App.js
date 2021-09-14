@@ -9,15 +9,15 @@ import Grid from '@material-ui/core/Grid'
 
 import Header from './Header'
 import About from './About'
-import BasicInfoForm from './BasicInfoForm'
+import FormDisplay from './FormDisplay'
 import Footer from './Footer'
 
 function App() {
 
   const pages = {
     basicInfo: {
-      pageRoute: '/basic-info',
-      pageComponent: BasicInfoForm,
+      pageRoute: '/create-form',
+      pageComponent: FormDisplay,
     },
     landing: {
       pageRoute: '/',

@@ -23,7 +23,7 @@ export default function About() {
       <Box mt={4}>
         <Button
           component={Link}
-          to='/basic-info'
+          to='/create-form'
           color='primary'
           variant='contained'
         >

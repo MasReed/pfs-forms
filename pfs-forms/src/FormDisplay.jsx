@@ -5,7 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 
-export default function BasicInfoForm() {
+export default function FormDisplay() {
   const [tabValue, setTabValue] = useState(0)
 
   const handleTabChange = (event, newValue) => {
