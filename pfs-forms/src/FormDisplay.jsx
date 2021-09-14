@@ -5,6 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab'
 
 import PersonalInformationForm from './PersonalInformationForm'
+import SchedulesInformation from './SchedulesInformation'
 
 export default function FormDisplay() {
   const [tabValue, setTabValue] = useState(0)
@@ -40,9 +41,7 @@ export default function FormDisplay() {
       {
         tabValue === 1
         && (
-          <Box>
-            Page 2
-          </Box>
+          <SchedulesInformation />
         )
       }
 
