@@ -10,10 +10,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   section: {
-    display: 'flex'
+    display: 'flex',
+    margin: '0 0 1rem 0',
   },
   textField: {
-    margin: theme.spacing(2),
+    margin: '0 0 1rem 0',
   },
 }))
 
@@ -23,7 +24,7 @@ export default function PersonalInformationForm() {
   return(
     <>
       <Box my={4}>
-        <Typography variant='h3'>BASIC INFO FORM</Typography>
+        <Typography variant='h3'>Basic Info</Typography>
       </Box>
 
       <form noValidate autoComplete='off'>
@@ -32,12 +33,12 @@ export default function PersonalInformationForm() {
           direction='row'
           justifyContent='flex-start'
           alignItems='flex-start'
-          spacing={2}
+          spacing={0}
           xs={12}
         >
 
           {/* NAME */}
-          <Grid container item sm={12}>
+          <Grid container item className={classes.section} sm={12}>
             <Grid item sm={4}>
               <TextField
                 id='first-name'
@@ -70,7 +71,7 @@ export default function PersonalInformationForm() {
           </Grid>
 
           {/* ADDRESSES */}
-          <Grid container item sm={12}>
+          <Grid container item className={classes.section} sm={12}>
             <Grid item sm={4}>
               <TextField
                 id='primary-address'
@@ -104,7 +105,7 @@ export default function PersonalInformationForm() {
 
 
           {/* DATES & IDS */}
-          <Grid container item sm={12}>
+          <Grid container item className={classes.section} sm={12}>
             <Grid item sm={4}>
               <TextField
                 id='date-of-birth'
@@ -127,7 +128,7 @@ export default function PersonalInformationForm() {
           </Grid>
 
           {/* EMPLOYMENT - employer, type, */}
-          <Grid container item sm={12}>
+          <Grid container item className={classes.section} sm={12}>
 
             <Grid container sm={12}>
               <Grid container item sm={4}>
