@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid'
 
 import Header from './Header'
 import About from './About'
+import BasicInfoForm from './BasicInfoForm'
 import Footer from './Footer'
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
   const pages = {
     basicInfo: {
       pageRoute: '/basic-info',
-      pageComponent: About,
+      pageComponent: BasicInfoForm,
     },
     landing: {
       pageRoute: '/',
@@ -36,7 +37,7 @@ function App() {
     >
       <Header />
 
-      {/* Routes */}
+      {/* Routes generated from pages object */}
       <Switch>
         {
           Object.values(pages).map(page => (

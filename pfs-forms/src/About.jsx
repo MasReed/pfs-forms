@@ -10,9 +10,8 @@ import Typography from '@material-ui/core/Typography'
 
 export default function About() {
 
-
   return(
-    <Box style={{ backgroundColor: 'orange' }}>
+    <Box p={5} style={{ backgroundColor: 'orange' }}>
       <Typography variant='h2'>
         About Section
       </Typography>
@@ -21,14 +20,16 @@ export default function About() {
         Use this to generate a PFS. Click below.
       </Typography>
 
-      <Button
-        component={Link}
-        to = '/basic-info'
-        color='primary'
-        variant='contained'
-      >
-        Start Here
-      </Button>
+      <Box mt={4}>
+        <Button
+          component={Link}
+          to='/basic-info'
+          color='primary'
+          variant='contained'
+        >
+          Start Here
+        </Button>
+      </Box>
     </Box>
   )
 }
