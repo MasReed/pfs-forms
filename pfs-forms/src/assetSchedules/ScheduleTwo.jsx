@@ -47,6 +47,7 @@ export default function ScheduleTwo() {
   // const rows = useSelector(state => state.scheduleTwo.rows)
   const rows = [
     {
+      id: 1,
       description: 'an investement',
       registrant: 'its me',
       amount: 10,
@@ -54,6 +55,7 @@ export default function ScheduleTwo() {
       value: 100000,
     },
     {
+      id: 2,
       description: 'another investement',
       registrant: 'its me2',
       amount: 1000,
@@ -70,9 +72,12 @@ export default function ScheduleTwo() {
       setSelectedRows(newSelecteds)
       return
     }
+    setSelectedRows([])
   }
 
   const handleClick = (event, id) => {
+    console.log('handling click')
+    console.log('event', event.target)
     const selectedIndex = selectedRows.indexOf(id)
 
     let newSelected = []
@@ -120,33 +125,51 @@ export default function ScheduleTwo() {
           </TableHead>
 
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.id}
-                hover
-                onClick={(event) => handleClick(event, row.id)}
-                role='checkbox'
-                tabIndex={-1}
-                selected={() => isSelected(row.id)}
-                aria-checked={() => isSelected(row.id)}
-              >
-                <TableCell padding='checkbox'>
-                  <Checkbox checked={() => isSelected(row.id)}/>
-                </TableCell>
-                <TableCell>{row.description}</TableCell>
-                <TableCell>{row.registrant}</TableCell>
-                <TableCell>{row.amount}</TableCell>
-                <TableCell>
-                  {
-                    <>
-                      <Checkbox checked={row.retirement === true}/> Yes
-                      <Checkbox checked={row.retirement === false}/> No
-                    </>
-                  }
-                </TableCell>
-                <TableCell>{row.value}</TableCell>
-              </TableRow>
-            ))}
+            {rows.map((row, index) => {
+              const isItemSelected = isSelected(row.id)
+              const labelId = `table-row-checkbox-${index}`
+
+              return (
+                <TableRow
+                  key={row.id}
+                  hover
+                  onClick={(event) => handleClick(event, row.id)}
+                  role='checkbox'
+                  tabIndex={-1}
+                  selected={isItemSelected}
+                  aria-checked={isItemSelected}
+                >
+                  <TableCell padding='checkbox'>
+                    <Checkbox
+                      checked={isItemSelected}
+                      inputProps={{ 'aria-labelledby': labelId }}
+                    />
+                  </TableCell>
+                  <TableCell>{row.description}</TableCell>
+                  <TableCell>{row.registrant}</TableCell>
+                  <TableCell>{row.amount}</TableCell>
+                  <TableCell>
+                    {
+                      <>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={row.retirement}
+                              onChange={() => console.log('check changed')}
+                              name='retirementChecked'
+                            />
+                          }
+                          label='Yes'
+                        />
+
+                        <Checkbox checked={row.retirement === false}/> No
+                      </>
+                    }
+                  </TableCell>
+                  <TableCell>{row.value}</TableCell>
+                </TableRow>
+              )})
+            }
           </TableBody>
         </Table>
       </TableContainer>

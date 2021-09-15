@@ -45,7 +45,7 @@ function App() {
               <Grid item id='content' style={{ flex: 1 }}>
                 <Container>
                   <Box
-                    style={{ backgroundColor: 'lightblue', height: '50rem' }}>
+                    style={{ backgroundColor: 'lightblue' }}>
                     <page.pageComponent />
                   </Box>
                 </Container>

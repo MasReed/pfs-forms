@@ -1,9 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import scheduleOneReducer from './reducers/scheduleOneReducer'
+import scheduleTwoReducer from './reducers/scheduleTwoReducer'
+
 
 const store = configureStore({
   reducer: {
-    scheduleOne: scheduleOneReducer
+    scheduleOne: scheduleOneReducer,
+    scheduleTwo: scheduleTwoReducer,
   }
 })
 
