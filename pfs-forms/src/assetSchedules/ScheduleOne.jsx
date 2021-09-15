@@ -53,8 +53,14 @@ export default function ScheduleOne() {
   const [selectedRows, setSelectedRows] = useState([])
 
   const handleAddRow = async (event) => {
+
+    const makeId = () => {
+      const ids = rows.map(row => row.id)
+      return Math.max(...ids) + 1
+    }
+
     await dispatch(addRow({
-        id: Math.random(), // rows.length + 1, // how to ensure unique id?
+        id: makeId(),
         owner: '',
         description: 'e.g., checking',
         bank: '',
@@ -81,7 +87,7 @@ export default function ScheduleOne() {
 
       <Box className={classes.table}>
         <DataGrid
-          rows={rows}
+          rows={rows.filter(row => row.isDeleted === false)}
           columns={columns}
           checkboxSelection={true}
           onSelectionModelChange={(rowIds) => setSelectedRows(rowIds)}
@@ -90,6 +96,8 @@ export default function ScheduleOne() {
           autoPageSize={false}
           disableSelectionOnClick={true}
           hideFooter={false}
+          hideFooterPagination={true}
+          hideFooterRowCount={true}
           showColumnRightBorder={false}
           showCellRightBorder={true}
         />
