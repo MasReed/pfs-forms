@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { decrement, increment } from '../reducers/scheduleOneReducer'
+
 import { makeStyles } from '@material-ui/core/styles'
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid'
 
@@ -45,6 +48,8 @@ const columns: GridColDef[] = [
 
 export default function ScheduleOne() {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const rows2 = useSelector(state => state.scheduleOne.value)
 
   const [rows: GridRowsProp, setRows] = useState([
     { id: 1, owner: 'hllo', description: 'wrld', bank: 'biwa', balance: 59999 },
@@ -108,6 +113,12 @@ export default function ScheduleOne() {
 
       <Button variant='contained' color='primary' onClick={handleAddRow}>
         Add Row
+      </Button>
+
+      <span>{rows2}</span>
+
+      <Button variant='contained' onClick={() => dispatch(decrement())}>
+        ------
       </Button>
     </>
   )
