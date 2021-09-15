@@ -34,7 +34,6 @@ export default function PersonalInformationForm() {
           justifyContent='flex-start'
           alignItems='flex-start'
           spacing={0}
-          xs={12}
         >
 
           {/* NAME */}
@@ -130,8 +129,8 @@ export default function PersonalInformationForm() {
           {/* EMPLOYMENT - employer, type, */}
           <Grid container item className={classes.section} sm={12}>
 
-            <Grid container sm={12}>
-              <Grid container item sm={4}>
+            <Grid container item sm={12}>
+              <Grid item sm={4}>
                 <TextField
                   id='employer'
                   label='Employer'
@@ -152,7 +151,7 @@ export default function PersonalInformationForm() {
               </Grid>
             </Grid>
 
-            <Grid container sm={12}>
+            <Grid container item sm={12}>
               <Grid item sm={4}>
                 <TextField
                   id='employment-type'

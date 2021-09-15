@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { decrement, increment } from '../reducers/scheduleOneReducer'
+import { decrement } from '../reducers/scheduleOneReducer'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid'

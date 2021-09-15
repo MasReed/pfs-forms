@@ -41,7 +41,7 @@ function App() {
       <Switch>
         {
           Object.values(pages).map(page => (
-            <Route path={page.pageRoute}>
+            <Route key={page.pageRoute} path={page.pageRoute}>
               <Grid item id='content' style={{ flex: 1 }}>
                 <Container>
                   <Box

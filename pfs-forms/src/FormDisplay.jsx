@@ -21,7 +21,7 @@ export default function FormDisplay() {
           value={tabValue}
           onChange={handleTabChange}
           indicatorColor='secondary'
-          textColor=''
+          textColor='secondary'
           centered
         >
           <Tab label='Personal' />
