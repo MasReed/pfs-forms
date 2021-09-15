@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
 import ScheduleOne from './assetSchedules/ScheduleOne'
+import ScheduleTwo from './assetSchedules/ScheduleTwo'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,10 +42,7 @@ export default function SchedulesInformation() {
 
         {/* Schedule 2 */}
         <Grid item className={classes.section}>
-          <Typography variant='h5'>Schedule 2</Typography>
-          <Typography variant='subtitle1'>
-            Publicly Traded Investments - stocks, bonds, mutual funds, 401k, IRAs
-          </Typography>
+          <ScheduleTwo />
         </Grid>
 
         {/* Schedule 3 */}
