@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { decrement } from '../reducers/scheduleOneReducer'
+import { addRow, decrement, removeRow } from '../reducers/scheduleOneReducer'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid'
@@ -49,29 +49,32 @@ const columns: GridColDef[] = [
 export default function ScheduleOne() {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const rows2 = useSelector(state => state.scheduleOne.value)
+  const rows: GridRowsProp = useSelector(state => state.scheduleOne.rows)
 
-  const [rows: GridRowsProp, setRows] = useState([
-    { id: 1, owner: 'hllo', description: 'wrld', bank: 'biwa', balance: 59999 },
-    { id: 2, owner: 'helo', description: 'wrld', bank: 'biwa', balance: 59999 },
-    { id: 3, owner: 'helo', description: 'wrld', bank: 'biwa', balance: 59999 },
-  ])
-
-  const handleAddRow = (event) => {
+  const handleAddRow = async (event) => {
     event.preventDefault()
 
-    setRows(
-      [
-        ...(rows: GridRowsProp),
-        {
-          id: rows.length + 1,
-          owner: '',
-          description: '',
-          bank: '',
-          balance: 0
-        }
-      ]
-    )
+    // setRows(
+    //   [
+    //     ...(rows: GridRowsProp),
+    //     {
+    //       id: rows.length + 1,
+    //       owner: '',
+    //       description: '',
+    //       bank: '',
+    //       balance: 0
+    //     }
+    //   ]
+    // )
+
+    await dispatch(addRow({
+        id: rows.length + 1,
+        owner: '',
+        description: 'e.g., checking',
+        bank: '',
+        balance: 0
+      }
+    ))
   }
 
   const handleCellUpdate = (event) => {
@@ -91,7 +94,7 @@ export default function ScheduleOne() {
     const updatedState = rows.map(row => row.id !== updatedRow.id ? row : updated)
     console.log('updatedState', updatedState)
 
-    setRows(updatedState)
+    // setRows(updatedState)
 
   }
 
@@ -108,6 +111,9 @@ export default function ScheduleOne() {
           autoPageSize={false}
           hideFooter={true}
           onCellEditCommit={handleCellUpdate}
+          checkboxSelection={true}
+          showColumnRightBorder={false}
+          showCellRightBorder={true}
         />
       </Box>
 
@@ -115,11 +121,7 @@ export default function ScheduleOne() {
         Add Row
       </Button>
 
-      <span>{rows2}</span>
 
-      <Button variant='contained' onClick={() => dispatch(decrement())}>
-        ------
-      </Button>
     </>
   )
 }

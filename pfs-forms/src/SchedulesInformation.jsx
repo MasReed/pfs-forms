@@ -33,7 +33,6 @@ export default function SchedulesInformation() {
         justifyContent='flex-start'
         alignItems='flex-start'
         spacing={0}
-        xs={12}
       >
         {/* Schedule 1 */}
         <Grid item className={classes.section}>

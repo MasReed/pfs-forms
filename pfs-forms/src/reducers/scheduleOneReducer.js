@@ -3,22 +3,26 @@ import { createSlice } from '@reduxjs/toolkit'
 export const scheduleOneSlice = createSlice({
   name: 'scheduleOne',
   initialState: {
-    value: 0
-    // { id: 1, owner: 'hllo', description: 'wrld', bank: 'biwa', balance: 59999 }
+    rows: [
+      { id: 1, owner: '', description: '', bank: '', balance: 0 },
+    ]
   },
   reducers: {
-    increment: state => {
-      state.value += 1
+    addRow: (state, action) => {
+      state.rows.push(action.payload)
     },
     decrement: state => {
       state.value -= 1
     },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload
+    removeRow: (state, action) => {
+      const index = state.rows.indexOf(action.payload.id)
+      if (index !== -1) {
+        state.rows.splice(index, 1)
+      }
     },
   }
 })
 
-export const { increment, decrement, incrementByAmount } = scheduleOneSlice.actions
+export const { addRow, decrement, removeRow } = scheduleOneSlice.actions
 
 export default scheduleOneSlice.reducer
