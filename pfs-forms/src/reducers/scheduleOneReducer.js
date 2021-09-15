@@ -14,15 +14,18 @@ export const scheduleOneSlice = createSlice({
     decrement: state => {
       state.value -= 1
     },
-    removeRow: (state, action) => {
-      const index = state.rows.indexOf(action.payload.id)
-      if (index !== -1) {
-        state.rows.splice(index, 1)
-      }
+    removeRows: (state, action) => {
+      action.payload.forEach(rowId => {
+        const index = state.rows.indexOf(state.rows.find(row => row.id === rowId))
+        if (index !== -1) {
+          state.rows.splice(index, 1)
+          // TODO: instead add isDeleted property for soft deletes only display rows where isDeleted === false in scheduleOne component
+        }
+      })
     },
   }
 })
 
-export const { addRow, decrement, removeRow } = scheduleOneSlice.actions
+export const { addRow, decrement, removeRows } = scheduleOneSlice.actions
 
 export default scheduleOneSlice.reducer

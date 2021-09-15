@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addRow, decrement, removeRow } from '../reducers/scheduleOneReducer'
+import { addRow, removeRows } from '../reducers/scheduleOneReducer'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid'
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     color: 'primary',
     height: 300,
     width: '100%',
-    minWidth: 1005,
+    minWidth: 1060,
   },
 })
 
@@ -50,25 +50,11 @@ export default function ScheduleOne() {
   const classes = useStyles()
   const dispatch = useDispatch()
   const rows: GridRowsProp = useSelector(state => state.scheduleOne.rows)
+  const [selectedRows, setSelectedRows] = useState([])
 
   const handleAddRow = async (event) => {
-    event.preventDefault()
-
-    // setRows(
-    //   [
-    //     ...(rows: GridRowsProp),
-    //     {
-    //       id: rows.length + 1,
-    //       owner: '',
-    //       description: '',
-    //       bank: '',
-    //       balance: 0
-    //     }
-    //   ]
-    // )
-
     await dispatch(addRow({
-        id: rows.length + 1,
+        id: rows.length + 1, // how to ensure unique id?
         owner: '',
         description: 'e.g., checking',
         bank: '',
@@ -77,6 +63,12 @@ export default function ScheduleOne() {
     ))
   }
 
+  const handleRemoveRows = async () => {
+    console.log('removing row...')
+    await dispatch(removeRows(selectedRows))
+  }
+
+  //
   const handleCellUpdate = (event) => {
     console.log('event', event)
     console.log('rows', rows)
@@ -107,11 +99,13 @@ export default function ScheduleOne() {
         <DataGrid
           rows={rows}
           columns={columns}
+          checkboxSelection={true}
+          onSelectionModelChange={(rowIds) => setSelectedRows(rowIds)}
+          onCellEditCommit={handleCellUpdate}
           autoHeight={false}
           autoPageSize={false}
-          hideFooter={true}
-          onCellEditCommit={handleCellUpdate}
-          checkboxSelection={true}
+          disableSelectionOnClick={true}
+          hideFooter={false}
           showColumnRightBorder={false}
           showCellRightBorder={true}
         />
@@ -121,6 +115,14 @@ export default function ScheduleOne() {
         Add Row
       </Button>
 
+      {
+        selectedRows.length >= 1 &&
+        <Button
+          variant='contained' color='secondary' onClick={handleRemoveRows}
+        >
+          {selectedRows.length > 1 ? 'Remove Rows' : 'Remove Row'}
+        </Button>
+      }
 
     </>
   )
