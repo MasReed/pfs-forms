@@ -68,7 +68,7 @@ export default function ScheduleTwo() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.id)
+      const newSelecteds = rows.map((row) => row.id)
       setSelectedRows(newSelecteds)
       return
     }
@@ -113,6 +113,7 @@ export default function ScheduleTwo() {
             <TableRow>
               <TableCell padding='checkbox'>
                 <Checkbox
+                  checked={rows.length > 0 && selectedRows.length === rows.length}
                   onChange={handleSelectAllClick}
                 />
               </TableCell>
