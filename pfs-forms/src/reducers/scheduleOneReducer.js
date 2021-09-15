@@ -4,16 +4,36 @@ export const scheduleOneSlice = createSlice({
   name: 'scheduleOne',
   initialState: {
     rows: [
-      { id: 1, owner: '', description: '', bank: '', balance: 0 },
+      {
+        id: 1,
+        owner: '',
+        description: '',
+        bank: '',
+        balance: 0,
+        isDeleted: false
+      },
     ]
   },
   reducers: {
     addRow: (state, action) => {
       state.rows.push(action.payload)
     },
-    decrement: state => {
-      state.value -= 1
-    },
+    editRow: (state, action) => {
+      const rowToUpdate = state.rows.find(row => row.id === action.payload.id)
+
+      const updatedRow = {
+        ...rowToUpdate,
+        [action.payload.field]: action.payload.value
+      }
+
+      const updatedState = state.rows.map(row => row.id === action.payload.id
+        ? updatedRow
+        : row
+      )
+
+      state.rows = updatedState
+    }
+    ,
     removeRows: (state, action) => {
       action.payload.forEach(rowId => {
         const index = state.rows.indexOf(state.rows.find(row => row.id === rowId))
@@ -26,6 +46,6 @@ export const scheduleOneSlice = createSlice({
   }
 })
 
-export const { addRow, decrement, removeRows } = scheduleOneSlice.actions
+export const { addRow, editRow, removeRows } = scheduleOneSlice.actions
 
 export default scheduleOneSlice.reducer

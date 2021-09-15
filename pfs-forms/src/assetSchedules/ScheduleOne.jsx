@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addRow, removeRows } from '../reducers/scheduleOneReducer'
+import { addRow, editRow, removeRows } from '../reducers/scheduleOneReducer'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid'
@@ -54,40 +54,24 @@ export default function ScheduleOne() {
 
   const handleAddRow = async (event) => {
     await dispatch(addRow({
-        id: rows.length + 1, // how to ensure unique id?
+        id: Math.random(), // rows.length + 1, // how to ensure unique id?
         owner: '',
         description: 'e.g., checking',
         bank: '',
-        balance: 0
+        balance: 0,
+        isDeleted: false
       }
     ))
   }
 
+  //
   const handleRemoveRows = async () => {
-    console.log('removing row...')
     await dispatch(removeRows(selectedRows))
   }
 
   //
-  const handleCellUpdate = (event) => {
-    console.log('event', event)
-    console.log('rows', rows)
-
-    const updatedRow = rows.find(row => row.id === event.id)
-    console.log('updateRow', updatedRow)
-
-    const updated = {
-      ...updatedRow,
-      [event.field]: event.value
-    }
-    console.log('updated', updated)
-
-
-    const updatedState = rows.map(row => row.id !== updatedRow.id ? row : updated)
-    console.log('updatedState', updatedState)
-
-    // setRows(updatedState)
-
+  const handleCellUpdate = async (event) => {
+    await dispatch(editRow(event))
   }
 
   return (
