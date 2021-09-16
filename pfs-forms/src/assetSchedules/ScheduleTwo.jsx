@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { addRow, editRow, removeRows } from '../reducers/scheduleTwoReducer'
 import { makeStyles } from '@material-ui/core/styles'
-
 import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -44,25 +45,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ScheduleTwo() {
   const classes = useStyles()
   const dispatch = useDispatch()
-  // const rows = useSelector(state => state.scheduleTwo.rows)
-  const rows = [
-    {
-      id: 1,
-      description: 'an investement',
-      registrant: 'its me',
-      amount: 10,
-      retirement: false,
-      value: 100000,
-    },
-    {
-      id: 2,
-      description: 'another investement',
-      registrant: 'its me2',
-      amount: 1000,
-      retirement: true,
-      value: 999990,
-    },
-  ]
+  const rows = useSelector(state => state.scheduleTwo.rows)
 
   const [selectedRows, setSelectedRows] = useState([])
 
@@ -100,6 +83,30 @@ export default function ScheduleTwo() {
 
   const isSelected = (id) => selectedRows.indexOf(id) !== -1
 
+  //
+  const handleAddRow = async (event) => {
+    const makeId = () => {
+      const ids = rows.map(row => row.id)
+      return Math.max(...ids) + 1
+    }
+
+    await dispatch(addRow({
+        id: makeId(),
+        description: '',
+        registrant: '',
+        amount: '',
+        retirement: false,
+        value: 0,
+        isDeleted: false
+      }
+    ))
+  }
+
+  //
+  const handleRemoveRows = async () => {
+    await dispatch(removeRows(selectedRows))
+  }
+
   return (
     <Box className={classes.root}>
       <Typography variant='h5'>Schedule 2</Typography>
@@ -126,7 +133,7 @@ export default function ScheduleTwo() {
           </TableHead>
 
           <TableBody>
-            {rows.map((row, index) => {
+            {rows.filter(row => row.isDeleted === false).map((row, index) => {
               const isItemSelected = isSelected(row.id)
               const labelId = `table-row-checkbox-${index}`
 
@@ -173,7 +180,22 @@ export default function ScheduleTwo() {
             }
           </TableBody>
         </Table>
+
+        <Button variant='contained' color='primary' onClick={handleAddRow}>
+          Add Row
+        </Button>
+
+        {
+          selectedRows.length >= 1 &&
+          <Button
+            variant='contained' color='secondary' onClick={handleRemoveRows}
+          >
+            {selectedRows.length > 1 ? 'Remove Rows' : 'Remove Row'}
+          </Button>
+        }
       </TableContainer>
+
+
     </Box>
   )
 }

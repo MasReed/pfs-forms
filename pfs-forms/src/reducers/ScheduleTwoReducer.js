@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const scheduleOneSlice = createSlice({
-  name: 'scheduleOne',
+export const scheduleTwoSlice = createSlice({
+  name: 'scheduleTwo',
   initialState: {
     rows: [
       {
         id: 1,
-        owner: '',
         description: '',
-        bank: '',
-        balance: 0,
+        registrant: '',
+        amount: '',
+        retirement: false,
+        value: 0,
         isDeleted: false
       },
     ]
@@ -56,6 +57,6 @@ export const scheduleOneSlice = createSlice({
   }
 })
 
-export const { addRow, editRow, removeRows } = scheduleOneSlice.actions
+export const { addRow, editRow, removeRows } = scheduleTwoSlice.actions
 
-export default scheduleOneSlice.reducer
+export default scheduleTwoSlice.reducer
