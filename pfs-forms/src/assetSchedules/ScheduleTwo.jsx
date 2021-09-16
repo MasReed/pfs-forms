@@ -1,9 +1,16 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addRow, editRow, removeRows } from '../reducers/scheduleTwoReducer'
+
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
+import Checkbox from '@material-ui/core/Checkbox'
+import Divider from '@material-ui/core/Divider'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -13,12 +20,9 @@ import TableRow from '@material-ui/core/TableRow'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
 
 import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
-import Checkbox from '@material-ui/core/Checkbox'
+
 import IconButton from '@material-ui/core/IconButton'
 import Tooltip from '@material-ui/core/Tooltip'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 
@@ -39,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
   },
   tableContainer: {
     backgroundColor: '#ccc',
+    margin: 'auto',
+    width: '100%',
+  },
+  tableHead: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
   },
 }))
 
@@ -105,7 +115,17 @@ export default function ScheduleTwo() {
   //
   const handleRemoveRows = async () => {
     await dispatch(removeRows(selectedRows))
+    setSelectedRows([])
   }
+
+  //
+  const columnHeadings = [
+    'Account Description',
+    'Name Registerd In',
+    'Shares or Amount',
+    'Retirement',
+    'Current Value',
+  ]
 
   return (
     <Box className={classes.root}>
@@ -116,19 +136,28 @@ export default function ScheduleTwo() {
 
       <TableContainer className={classes.tableContainer} component={Paper}>
         <Table className={classes.table} aria-label='Schedule Two Table'>
-          <TableHead>
+          <TableHead className={classes.tableHead}>
             <TableRow>
-              <TableCell padding='checkbox'>
+              <TableCell
+                className={classes.tableHeadCell}
+                padding='checkbox'
+              >
                 <Checkbox
                   checked={rows.length > 0 && selectedRows.length === rows.length}
                   onChange={handleSelectAllClick}
                 />
               </TableCell>
-              <TableCell>Account Description</TableCell>
-              <TableCell>Name Registered In</TableCell>
-              <TableCell>Shares/Amount</TableCell>
-              <TableCell>Retirement</TableCell>
-              <TableCell>Current Value</TableCell>
+
+              {/* Generate Column Headings */}
+              {
+                columnHeadings.map(heading => (
+                  <TableCell key={`column-heading-${heading}`}>
+                    <Typography variant='subtitle1'>
+                      {heading}
+                    </Typography>
+                  </TableCell>
+                ))
+              }
             </TableRow>
           </TableHead>
 
