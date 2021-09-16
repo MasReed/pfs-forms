@@ -25,6 +25,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Tooltip from '@material-ui/core/Tooltip'
 import DeleteIcon from '@material-ui/icons/Delete'
 
+import CustomTable from '../CustomTable'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -113,6 +114,13 @@ export default function ScheduleTwo() {
   }
 
   //
+  const handleCellClick = (rowN, colN, e) => {
+    console.log('row number', rowN)
+    console.log('col number', colN)
+    console.log('event', e)
+  }
+
+  //
   const handleRemoveRows = async () => {
     await dispatch(removeRows(selectedRows))
     setSelectedRows([])
@@ -135,7 +143,10 @@ export default function ScheduleTwo() {
       </Typography>
 
       <TableContainer className={classes.tableContainer} component={Paper}>
-        <Table className={classes.table} aria-label='Schedule Two Table'>
+        <Table
+          aria-label='Schedule Two Table'
+          className={classes.table}
+        >
           <TableHead className={classes.tableHead}>
             <TableRow>
               <TableCell
@@ -223,6 +234,12 @@ export default function ScheduleTwo() {
           </Button>
         }
       </TableContainer>
+
+
+      <CustomTable
+        colHeadings={columnHeadings}
+        rows={rows}
+      />
 
 
     </Box>
