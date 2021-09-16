@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
+import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
 import Paper from '@material-ui/core/Paper'
 import TableContainer from '@material-ui/core/TableContainer'
@@ -31,12 +33,20 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#ccc'
   },
   footer: {
-    backgroundColor: theme.palette.secondary.main
-  }
+    backgroundColor: '#bbb',
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '1rem'
+  },
+  footerButton: {
+    margin: '0 .5rem',
+    padding: '.5rem 1rem',
+  },
 }))
 
 export default function CustomTable ({ rows, colHeadings }) {
   const classes = useStyles()
+  const [selectedRows, setSelectedRows] = useState([2, 3, 4])
 
   return (
     <TableContainer className={classes.container} component={Paper}>
@@ -77,16 +87,40 @@ export default function CustomTable ({ rows, colHeadings }) {
             </TableCell>
           </TableRow>
         </TableBody>
-
-        {/* Table Footer */}
-        <TableFooter className={classes.footer}>
-          <TableRow>
-            <TableCell>
-              FOOTER
-            </TableCell>
-          </TableRow>
-        </TableFooter>
       </Table>
+
+      {/* Footer Area */}
+      <Box className={classes.footer}>
+
+        <Typography className={classes.footerButton} variant='button'>
+          {selectedRows.length} rows selected
+        </Typography>
+
+        {/* ADD & REMOVE ROW BUTTONS */}
+        <Box>
+          {
+            selectedRows.length >= 1 &&
+            <Button
+              onClick={() => console.log('remove rows clicked')}
+              className={classes.footerButton}
+              color='primary'
+              variant='contained'
+            >
+              {selectedRows.length > 1 ? 'Remove Rows' : 'Remove Row'}
+            </Button>
+          }
+
+          <Button
+            onClick={() => console.log('ADD ROW CLICKED')}
+            className={classes.footerButton}
+            color='secondary'
+            variant='contained'
+          >
+            Add Row
+          </Button>
+        </Box>
+      </Box>
+
     </TableContainer>
   )
 }
