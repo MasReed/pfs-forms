@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 import Box from '@material-ui/core/Box'
@@ -62,6 +62,37 @@ export default function CustomTable ({ rows, colHeadings }) {
     id: '',
     status: false,
   })
+
+  //
+  const hasFocus = (element, target) => {
+    if (element === target) {
+      return true
+    }
+    // else if (element.childNodes) {
+    //     const elements = element.childNodes
+    //
+    //     for (let i = 0; i < elements.length; i++) {
+    //       if ( elements[i] === target ) {
+    //         return true
+    //       } else if (elements[i].childNodes) {
+    //         if ( hasFocus(els[i], target) ) return true;
+    //         }
+    //     }
+    // }
+    return false;
+  }
+
+  useEffect(() => {
+    const hasFocusListener = (e) => {
+      if (!hasFocus(cellEditing.id, e.target)) {
+        setCellEditing({ id: '', status: false })
+      }
+    }
+
+    window.addEventListener('focus', hasFocusListener, false)
+
+    return () => window.removeEventListener('focus', hasFocusListener)
+  }, [cellEditing.id])
 
   //
   const isSelected = (id) => selectedRows.indexOf(id) !== -1
@@ -180,20 +211,19 @@ export default function CustomTable ({ rows, colHeadings }) {
                 >
                   {
                     cellEditing.status
-                    ? (
-                      <TextField
+                    ? (<TextField
                       inputProps={{style: {textTransform: 'capitalize'}}}
                       name='description'
                       onChange={(e) => e.target.value}
                       value={row.description}
                     />)
-                    : (<Typography variant='body1'>
+                    : (<Typography
+                      variant='body1'
+                    >
                       {row.description}
                     </Typography>)
                   }
-
                 </TableCell>
-
 
 
                 <TableCell
