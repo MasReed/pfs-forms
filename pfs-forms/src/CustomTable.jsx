@@ -58,6 +58,10 @@ const useStyles = makeStyles((theme) => ({
 export default function CustomTable ({ rows, colHeadings }) {
   const classes = useStyles()
   const [selectedRows, setSelectedRows] = useState([])
+  const [cellEditing, setCellEditing] = useState({
+    id: '',
+    status: false,
+  })
 
   //
   const isSelected = (id) => selectedRows.indexOf(id) !== -1
@@ -93,6 +97,18 @@ export default function CustomTable ({ rows, colHeadings }) {
     }
 
     setSelectedRows(newSelected)
+  }
+
+  //
+  const handleCellClick = (event, id) => {
+    console.log('SelectCellEvent', event.target)
+    console.log('cellId', event.target.id)
+
+    setCellEditing({
+      ...cellEditing,
+      id: event.target.id,
+      status: true
+    })
   }
 
   return (
@@ -157,12 +173,28 @@ export default function CustomTable ({ rows, colHeadings }) {
                 <TableCell
                   className={classes.cell}
                   component='td'
+                  id={`row-${row.id}-description`}
                   scope='row'
-                  onClick={(event) => console.log(event.target)}
+                  onClick={handleCellClick}
                   tabIndex={0}
                 >
-                  {row.description}
+                  {
+                    cellEditing.status
+                    ? (
+                      <TextField
+                      inputProps={{style: {textTransform: 'capitalize'}}}
+                      name='description'
+                      onChange={(e) => e.target.value}
+                      value={row.description}
+                    />)
+                    : (<Typography variant='body1'>
+                      {row.description}
+                    </Typography>)
+                  }
+
                 </TableCell>
+
+
 
                 <TableCell
                   className={classes.cell}
