@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '0',
   },
   table: {
-
   },
   head: {
     backgroundColor: theme.palette.primary.main,
@@ -32,6 +31,16 @@ const useStyles = makeStyles((theme) => ({
   },
   body: {
     backgroundColor: '#ccc'
+  },
+  row: {
+  },
+  cell: {
+    color: theme.palette.secondary.main,
+    '&:hover': {
+      backgroundColor: `${theme.palette.secondary.main + '40'}`, // Hex Opacity
+      boxShadow: `0 0 .25rem .125rem inset ${theme.palette.secondary.main}`,
+      cursor: 'cell',
+    },
   },
   footer: {
     backgroundColor: '#bbb',
@@ -126,13 +135,18 @@ export default function CustomTable ({ rows, colHeadings }) {
 
             return (
               <TableRow
+                aria-checked={isItemSelected}
+                className={classes.row}
                 key={row.id}
                 role='checkbox'
-                tabIndex={-1}
                 selected={isItemSelected}
-                aria-checked={isItemSelected}
+                tabIndex={-1}
               >
-                <TableCell padding='checkbox'>
+                <TableCell
+                  component='th'
+                  padding='checkbox'
+                  scope='row'
+                >
                   <Checkbox
                     checked={isItemSelected}
                     inputProps={{ 'aria-labelledby': labelId }}
@@ -141,19 +155,33 @@ export default function CustomTable ({ rows, colHeadings }) {
                 </TableCell>
 
                 <TableCell
-                  component='th'
+                  className={classes.cell}
+                  component='td'
                   scope='row'
                   onClick={(event) => console.log(event.target)}
+                  tabIndex={0}
                 >
                   {row.description}
                 </TableCell>
 
                 <TableCell
+                  className={classes.cell}
                   component='td'
                   scope='row'
                   onClick={(e) => console.log(e.target)}
+                  tabIndex={0}
                 >
                   {row.registrant}
+                </TableCell>
+
+                <TableCell
+                  className={classes.cell}
+                  component='td'
+                  scope='row'
+                  onClick={(e) => console.log(e.target)}
+                  tabIndex={0}
+                >
+                  {row.amount}
                 </TableCell>
 
                 <TableCell
@@ -161,10 +189,6 @@ export default function CustomTable ({ rows, colHeadings }) {
                   scope='row'
                   onClick={(e) => console.log(e.target)}
                 >
-                  {row.amount}
-                </TableCell>
-
-                <TableCell>
                   {
                     <>
                       <FormControlLabel
@@ -177,22 +201,19 @@ export default function CustomTable ({ rows, colHeadings }) {
                         }
                         label='Yes'
                       />
-
-                      <Checkbox checked={row.retirement === false}/> No
                     </>
                   }
                 </TableCell>
 
                 <TableCell
+                  className={classes.cell}
                   component='td'
                   scope='row'
                   onClick={(e) => console.log(e.target)}
+                  tabIndex={0}
                 >
                   {row.value}
                 </TableCell>
-
-
-
 
               </TableRow>
             )})
