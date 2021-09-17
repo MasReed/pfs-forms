@@ -6,9 +6,18 @@ export const scheduleTwoSlice = createSlice({
     rows: [
       {
         id: 1,
-        description: '',
-        registrant: '',
-        amount: '',
+        description: 'test',
+        registrant: 'tester',
+        amount: 15,
+        retirement: false,
+        value: 0,
+        isDeleted: false
+      },
+      {
+        id: 2,
+        description: 'test',
+        registrant: 'tester',
+        amount: 15,
         retirement: false,
         value: 0,
         isDeleted: false
