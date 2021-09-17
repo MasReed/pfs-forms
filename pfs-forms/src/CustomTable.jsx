@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CustomTable ({ rows, colHeadings }) {
   const classes = useStyles()
-  const [selectedRows, setSelectedRows] = useState([2, 3, 4])
+  const [selectedRows, setSelectedRows] = useState([1, 2])
 
   return (
     <TableContainer className={classes.container} component={Paper}>
@@ -89,11 +89,18 @@ export default function CustomTable ({ rows, colHeadings }) {
         </TableBody>
       </Table>
 
+
       {/* Footer Area */}
       <Box className={classes.footer}>
-
         <Typography className={classes.footerButton} variant='button'>
-          {selectedRows.length} rows selected
+          {/* TODO: RENDERING FOR 0, 1, or more selectd rows.*/}
+          {
+            selectedRows.length > 1
+            ? `${selectedRows.length} Rows Selected`
+            : selectedRows.length === 1
+              ? `${selectedRows.length} Row Selected`
+              : null
+          }
         </Typography>
 
         {/* ADD & REMOVE ROW BUTTONS */}
@@ -106,7 +113,7 @@ export default function CustomTable ({ rows, colHeadings }) {
               color='primary'
               variant='contained'
             >
-              {selectedRows.length > 1 ? 'Remove Rows' : 'Remove Row'}
+              Remove Selected {selectedRows.length > 1 ? 'Rows' : 'Row'}
             </Button>
           }
 
