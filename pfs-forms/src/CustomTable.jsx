@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#bbb',
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '1rem'
+    padding: '1rem .5rem'
   },
   footerButton: {
     margin: '0 .5rem',
@@ -70,7 +70,6 @@ const useStyles = makeStyles((theme) => ({
 export default function CustomTable ({ rows, colHeadings }) {
   const classes = useStyles()
   const dispatch = useDispatch()
-  // const rows = useSelector(state => state.scheduleTwo.rows)
   const [selectedRows, setSelectedRows] = useState([])
   const [cellEditing, setCellEditing] = useState({
     id: undefined,
@@ -128,7 +127,6 @@ export default function CustomTable ({ rows, colHeadings }) {
 
   //
   const handleRowClick = (event, id) => {
-    console.log(event)
     const selectedIndex = selectedRows.indexOf(id)
 
     let newSelected = []
@@ -230,7 +228,7 @@ export default function CustomTable ({ rows, colHeadings }) {
             const labelId = `table-row-checkbox-${index}`
 
             return (
-              <TableRow
+                <TableRow
                 aria-checked={isItemSelected}
                 className={classes.row}
                 key={row.id}
@@ -276,7 +274,6 @@ export default function CustomTable ({ rows, colHeadings }) {
                   }
                 </TableCell>
 
-
                 <TableCell
                   className={classes.cell}
                   component='td'
@@ -288,9 +285,10 @@ export default function CustomTable ({ rows, colHeadings }) {
                 {
                   cellEditing.status && (cellEditing.id === `row-${row.id}-registrant`)
                   ? (<TextField
+                    autoFocus
                     inputProps={{style: {textTransform: 'capitalize'}}}
                     name='registrant'
-                    onChange={(e) => e.target.value}
+                    onChange={handleCellEdit}
                     value={row.registrant}
                   />)
                   : (<Typography
@@ -304,17 +302,32 @@ export default function CustomTable ({ rows, colHeadings }) {
                 <TableCell
                   className={classes.cell}
                   component='td'
+                  id={`row-${row.id}-amount`}
                   scope='row'
-                  onClick={(e) => console.log(e.target)}
+                  onClick={handleCellClick}
                   tabIndex={0}
                 >
-                  {row.amount}
+                {
+                  cellEditing.status && (cellEditing.id === `row-${row.id}-amount`)
+                  ? (<TextField
+                    autoFocus
+                    inputProps={{style: {textTransform: 'capitalize'}}}
+                    name='amount'
+                    onChange={handleCellEdit}
+                    value={row.amount}
+                  />)
+                  : (<Typography
+                    variant='body1'
+                  >
+                    {row.amount}
+                  </Typography>)
+                }
                 </TableCell>
 
                 <TableCell
                   component='td'
                   scope='row'
-                  onClick={(e) => console.log(e.target)}
+                  onClick={handleCellClick}
                 >
                   {
                     <>
@@ -336,11 +349,26 @@ export default function CustomTable ({ rows, colHeadings }) {
                 <TableCell
                   className={classes.cell}
                   component='td'
+                  id={`row-${row.id}-value`}
                   scope='row'
-                  onClick={(e) => console.log(e.target)}
+                  onClick={handleCellClick}
                   tabIndex={0}
                 >
-                  {row.value}
+                {
+                  cellEditing.status && (cellEditing.id === `row-${row.id}-value`)
+                  ? (<TextField
+                    autoFocus
+                    inputProps={{style: {textTransform: 'capitalize'}}}
+                    name='value'
+                    onChange={handleCellEdit}
+                    value={row.value}
+                  />)
+                  : (<Typography
+                    variant='body1'
+                  >
+                    {row.value}
+                  </Typography>)
+                }
                 </TableCell>
 
               </TableRow>
