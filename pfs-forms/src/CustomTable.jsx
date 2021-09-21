@@ -36,11 +36,16 @@ const useStyles = makeStyles((theme) => ({
   },
   cell: {
     color: theme.palette.secondary.main,
+    textTransform: 'capitalize',
     '&:hover': {
       backgroundColor: `${theme.palette.secondary.main + '40'}`, // Hex Opacity
       boxShadow: `0 0 .25rem .125rem inset ${theme.palette.secondary.main}`,
       cursor: 'cell',
     },
+    '&:focus': {
+      backgroundColor: `${theme.palette.primary.main + '40'}`,
+      boxShadow: `0 0 .25rem .125rem inset ${theme.palette.primary.main}`,
+    }
   },
   footer: {
     backgroundColor: '#bbb',
@@ -59,40 +64,49 @@ export default function CustomTable ({ rows, colHeadings }) {
   const classes = useStyles()
   const [selectedRows, setSelectedRows] = useState([])
   const [cellEditing, setCellEditing] = useState({
-    id: '',
+    id: undefined,
     status: false,
   })
 
-  //
-  const hasFocus = (element, target) => {
-    if (element === target) {
-      return true
-    }
-    // else if (element.childNodes) {
-    //     const elements = element.childNodes
-    //
-    //     for (let i = 0; i < elements.length; i++) {
-    //       if ( elements[i] === target ) {
-    //         return true
-    //       } else if (elements[i].childNodes) {
-    //         if ( hasFocus(els[i], target) ) return true;
-    //         }
-    //     }
-    // }
-    return false;
-  }
 
   useEffect(() => {
     const hasFocusListener = (e) => {
-      if (!hasFocus(cellEditing.id, e.target)) {
-        setCellEditing({ id: '', status: false })
+      const cellEditingElement = document.getElementById(cellEditing.id)
+
+      console.log('****NEW****')
+      console.log('cellEditingElement', cellEditingElement)
+      console.log('losingFocus', e.target)
+      console.log('receivingFocus', e.relatedTarget)
+
+      // target gaining focus is within the cellEditing state element
+      if (cellEditingElement && cellEditingElement.contains(e.relatedTarget)) {
+        console.log('cellEditing child element in focus')
+      }
+
+      // target losing focus is within cell editing state element
+      if (cellEditingElement && cellEditingElement.contains(e.target)) {
+        console.log('cellEditing element in focus')
+      }
+
+      // TODO: implement saving form data on focus out
+
+      // focusing non table cell (td) elements reset state
+      if (!e.relatedTarget) {
+        setCellEditing({ id: undefined, status: false })
+      } else if (!e.relatedTarget.closest('tbody')) {
+        setCellEditing({ id: undefined, status: false })
       }
     }
 
-    window.addEventListener('focus', hasFocusListener, false)
+    window.addEventListener('focusout', hasFocusListener, false)
 
-    return () => window.removeEventListener('focus', hasFocusListener)
-  }, [cellEditing.id])
+    console.log('effecthook called: cellEditing:', cellEditing)
+
+    return () => window.removeEventListener('focusout', hasFocusListener)
+  }, [cellEditing])
+
+
+
 
   //
   const isSelected = (id) => selectedRows.indexOf(id) !== -1
@@ -133,13 +147,13 @@ export default function CustomTable ({ rows, colHeadings }) {
   //
   const handleCellClick = (event, id) => {
     console.log('SelectCellEvent', event.target)
-    console.log('cellId', event.target.id)
 
     setCellEditing({
       ...cellEditing,
-      id: event.target.id,
+      id: event.target.closest('td').id,
       status: true
     })
+
   }
 
   return (
@@ -210,11 +224,11 @@ export default function CustomTable ({ rows, colHeadings }) {
                   tabIndex={0}
                 >
                   {
-                    cellEditing.status
+                    cellEditing.status && (cellEditing.id === `row-${row.id}-description`)
                     ? (<TextField
                       inputProps={{style: {textTransform: 'capitalize'}}}
                       name='description'
-                      onChange={(e) => e.target.value}
+                      onChange={({ target }) => console.log(target.value)}
                       value={row.description}
                     />)
                     : (<Typography
@@ -229,11 +243,25 @@ export default function CustomTable ({ rows, colHeadings }) {
                 <TableCell
                   className={classes.cell}
                   component='td'
+                  id={`row-${row.id}-registrant`}
                   scope='row'
-                  onClick={(e) => console.log(e.target)}
+                  onClick={handleCellClick}
                   tabIndex={0}
                 >
-                  {row.registrant}
+                {
+                  cellEditing.status && (cellEditing.id === `row-${row.id}-registrant`)
+                  ? (<TextField
+                    inputProps={{style: {textTransform: 'capitalize'}}}
+                    name='registrant'
+                    onChange={(e) => e.target.value}
+                    value={row.registrant}
+                  />)
+                  : (<Typography
+                    variant='body1'
+                  >
+                    {row.registrant}
+                  </Typography>)
+                }
                 </TableCell>
 
                 <TableCell
