@@ -26,7 +26,22 @@ export const scheduleTwoSlice = createSlice({
   },
   reducers: {
     addRow: (state, action) => {
-      state.rows.push(action.payload)
+      const makeId = () => {
+        const ids = state.rows.map(row => row.id)
+        return Math.max(...ids) + 1
+      }
+
+      const newRow = {
+        id: makeId(),
+        description: 'Edit',
+        registrant: 'Me',
+        amount: 0,
+        retirement: false,
+        value: 0,
+        isDeleted: false
+      }
+
+      state.rows.push(newRow)
     },
     editRow: (state, action) => {
       const rowToUpdate = state.rows.find(row => row.id === action.payload.id)

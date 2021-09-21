@@ -179,6 +179,11 @@ export default function CustomTable ({ rows, colHeadings }) {
   }
 
   //
+  const handleAddRow = async () => {
+    await dispatch(addRow())
+  }
+
+  //
   return (
     <TableContainer className={classes.container} component={Paper}>
       <Table className={classes.table}>
@@ -364,7 +369,7 @@ export default function CustomTable ({ rows, colHeadings }) {
           }
 
           <Button
-            onClick={() => console.log('ADD ROW CLICKED')}
+            onClick={handleAddRow}
             className={classes.footerButton}
             color='secondary'
             variant='contained'

@@ -97,6 +97,7 @@ export default function ScheduleTwo() {
 
   //
   const handleAddRow = async (event) => {
+    // now handled in reducer
     const makeId = () => {
       const ids = rows.map(row => row.id)
       return Math.max(...ids) + 1
