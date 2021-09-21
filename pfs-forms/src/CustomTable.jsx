@@ -150,7 +150,7 @@ export default function CustomTable ({ rows, colHeadings }) {
   }
 
   //
-  const handleCellClick = (event, id) => {
+  const handleCellClick = (event) => {
     setCellEditing({
       ...cellEditing,
       id: event.target.closest('td').id,
@@ -262,6 +262,7 @@ export default function CustomTable ({ rows, colHeadings }) {
                   {
                     cellEditing.status && (cellEditing.id === `row-${row.id}-description`)
                     ? (<TextField
+                      autoFocus
                       inputProps={{style: {textTransform: 'capitalize'}}}
                       name='description'
                       onChange={handleCellEdit}
