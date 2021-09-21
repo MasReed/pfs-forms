@@ -170,6 +170,15 @@ export default function CustomTable ({ rows, colHeadings }) {
   }
 
   //
+  const handleBooleanCellEdit = async (event) => {
+    await dispatch(editRow({
+      id: Number(event.target.closest('tr').id),
+      field: event.target.name,
+      value: event.target.checked
+    }))
+  }
+
+  //
   return (
     <TableContainer className={classes.container} component={Paper}>
       <Table className={classes.table}>
@@ -300,8 +309,9 @@ export default function CustomTable ({ rows, colHeadings }) {
                         control={
                           <Checkbox
                             checked={row.retirement}
-                            onChange={() => console.log('check changed')}
-                            name='retirementChecked'
+                            id='retirementChecked'
+                            onChange={handleBooleanCellEdit}
+                            name='retirement'
                           />
                         }
                         label='Yes'
