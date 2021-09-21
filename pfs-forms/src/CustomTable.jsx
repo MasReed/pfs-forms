@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addRow, editRow, removeRows } from './reducers/scheduleTwoReducer'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -114,6 +114,7 @@ export default function CustomTable ({ rows, colHeadings }) {
     return () => window.removeEventListener('focusout', hasFocusListener)
   }, [cellEditing])
 
+  useEffect(() => console.log('SelectedRows', selectedRows), [selectedRows])
 
   //
   const isSelected = (id) => selectedRows.indexOf(id) !== -1
@@ -121,7 +122,7 @@ export default function CustomTable ({ rows, colHeadings }) {
   //
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelectedRows = rows.map((row) => row.id)
+      const newSelectedRows = rows.filter(row => !row.isDeleted).map((row) => row.id)
       setSelectedRows(newSelectedRows)
       return
     }
@@ -130,7 +131,7 @@ export default function CustomTable ({ rows, colHeadings }) {
 
   //
   const handleRowClick = (event, id) => {
-    console.log('SelectRowEvent', event.target)
+    console.log(event)
     const selectedIndex = selectedRows.indexOf(id)
 
     let newSelected = []
@@ -184,6 +185,14 @@ export default function CustomTable ({ rows, colHeadings }) {
   }
 
   //
+  const handleRemoveRows = async () => {
+    console.log(selectedRows)
+    await dispatch(removeRows(rows))
+
+    setSelectedRows([])
+  }
+
+  //
   return (
     <TableContainer className={classes.container} component={Paper}>
       <Table className={classes.table}>
@@ -194,7 +203,7 @@ export default function CustomTable ({ rows, colHeadings }) {
             {/* Select All Checkbox */}
             <TableCell padding='checkbox' variant='head'>
               <Checkbox
-                checked={rows.length > 0 && selectedRows.length === rows.length}
+                checked={rows.length > 0 && selectedRows.length === rows.filter(row => !row.isDeleted).length}
                 onChange={handleSelectAllClick}
               />
             </TableCell>
@@ -218,7 +227,7 @@ export default function CustomTable ({ rows, colHeadings }) {
 
         {/* Table body */}
         <TableBody className={classes.body}>
-          {rows.filter(row => row.isDeleted === false).map((row, index) => {
+          {rows.filter(row => !row.isDeleted).map((row, index) => {
             const isItemSelected = isSelected(row.id)
             const labelId = `table-row-checkbox-${index}`
 
@@ -359,7 +368,7 @@ export default function CustomTable ({ rows, colHeadings }) {
           {
             selectedRows.length >= 1 &&
             <Button
-              onClick={() => console.log('remove rows clicked')}
+              onClick={handleRemoveRows}
               className={classes.footerButton}
               color='primary'
               variant='contained'
