@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { addRow, editRow, removeRows } from './reducers/scheduleTwoReducer'
+
 import { makeStyles } from '@material-ui/core/styles'
 
 import Box from '@material-ui/core/Box'
@@ -42,10 +45,14 @@ const useStyles = makeStyles((theme) => ({
       boxShadow: `0 0 .25rem .125rem inset ${theme.palette.secondary.main}`,
       cursor: 'cell',
     },
-    '&:focus': {
+    '&:active': {
+      backgroundColor: `${theme.palette.primary.main + '40'}`,
+      boxShadow: `0 0 .25rem .125rem inset ${theme.palette.common.white}`,
+    },
+    '&:focus-within': {
       backgroundColor: `${theme.palette.primary.main + '40'}`,
       boxShadow: `0 0 .25rem .125rem inset ${theme.palette.primary.main}`,
-    }
+    },
   },
   footer: {
     backgroundColor: '#bbb',
@@ -62,30 +69,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CustomTable ({ rows, colHeadings }) {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  // const rows = useSelector(state => state.scheduleTwo.rows)
   const [selectedRows, setSelectedRows] = useState([])
   const [cellEditing, setCellEditing] = useState({
     id: undefined,
     status: false,
   })
 
-
   useEffect(() => {
     const hasFocusListener = (e) => {
       const cellEditingElement = document.getElementById(cellEditing.id)
-
-      console.log('****NEW****')
-      console.log('cellEditingElement', cellEditingElement)
-      console.log('losingFocus', e.target)
-      console.log('receivingFocus', e.relatedTarget)
+      // console.log('****NEW****')
+      // console.log('cellEditingElement', cellEditingElement)
+      // console.log('losingFocus', e.target)
+      // console.log('receivingFocus', e.relatedTarget)
 
       // target gaining focus is within the cellEditing state element
       if (cellEditingElement && cellEditingElement.contains(e.relatedTarget)) {
-        console.log('cellEditing child element in focus')
+        // console.log('cellEditing child element in focus')
       }
 
       // target losing focus is within cell editing state element
       if (cellEditingElement && cellEditingElement.contains(e.target)) {
-        console.log('cellEditing element in focus')
+        // console.log('cellEditing element in focus')
       }
 
       // TODO: implement saving form data on focus out
@@ -95,17 +102,17 @@ export default function CustomTable ({ rows, colHeadings }) {
         setCellEditing({ id: undefined, status: false })
       } else if (!e.relatedTarget.closest('tbody')) {
         setCellEditing({ id: undefined, status: false })
+      } else if (e.relatedTarget.type === 'checkbox') {
+        setCellEditing({ id: undefined, status: false })
       }
     }
 
     window.addEventListener('focusout', hasFocusListener, false)
 
-    console.log('effecthook called: cellEditing:', cellEditing)
+    // console.log('effecthook called: cellEditing:', cellEditing)
 
     return () => window.removeEventListener('focusout', hasFocusListener)
   }, [cellEditing])
-
-
 
 
   //
@@ -146,16 +153,23 @@ export default function CustomTable ({ rows, colHeadings }) {
 
   //
   const handleCellClick = (event, id) => {
-    console.log('SelectCellEvent', event.target)
-
     setCellEditing({
       ...cellEditing,
       id: event.target.closest('td').id,
       status: true
     })
-
   }
 
+  //
+  const handleCellEdit = async (event) => {
+    await dispatch(editRow({
+      id: Number(event.target.closest('tr').id),
+      field: event.target.name,
+      value: event.target.value,
+    }))
+  }
+
+  //
   return (
     <TableContainer className={classes.container} component={Paper}>
       <Table className={classes.table}>
@@ -199,6 +213,7 @@ export default function CustomTable ({ rows, colHeadings }) {
                 aria-checked={isItemSelected}
                 className={classes.row}
                 key={row.id}
+                id={row.id}
                 role='checkbox'
                 selected={isItemSelected}
                 tabIndex={-1}
@@ -228,7 +243,7 @@ export default function CustomTable ({ rows, colHeadings }) {
                     ? (<TextField
                       inputProps={{style: {textTransform: 'capitalize'}}}
                       name='description'
-                      onChange={({ target }) => console.log(target.value)}
+                      onChange={handleCellEdit}
                       value={row.description}
                     />)
                     : (<Typography
