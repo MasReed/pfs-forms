@@ -108,13 +108,10 @@ export default function CustomTable ({ rows, colHeadings }) {
     }
 
     window.addEventListener('focusout', hasFocusListener, false)
-
     // console.log('effecthook called: cellEditing:', cellEditing)
 
     return () => window.removeEventListener('focusout', hasFocusListener)
   }, [cellEditing])
-
-  useEffect(() => console.log('SelectedRows', selectedRows), [selectedRows])
 
   //
   const isSelected = (id) => selectedRows.indexOf(id) !== -1
@@ -186,9 +183,7 @@ export default function CustomTable ({ rows, colHeadings }) {
 
   //
   const handleRemoveRows = async () => {
-    console.log(selectedRows)
-    await dispatch(removeRows(rows))
-
+    await dispatch(removeRows(selectedRows))
     setSelectedRows([])
   }
 
@@ -203,7 +198,10 @@ export default function CustomTable ({ rows, colHeadings }) {
             {/* Select All Checkbox */}
             <TableCell padding='checkbox' variant='head'>
               <Checkbox
-                checked={rows.length > 0 && selectedRows.length === rows.filter(row => !row.isDeleted).length}
+                checked={
+                  rows.filter(row => !row.isDeleted).length > 0
+                  && selectedRows.length === rows.filter(row => !row.isDeleted).length
+                }
                 onChange={handleSelectAllClick}
               />
             </TableCell>
