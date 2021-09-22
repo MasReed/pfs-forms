@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   section: {
-    margin: '1rem 0'
+    margin: '1rem 0',
+    padding: '0 2rem'
   },
   textField: {
     margin: '1rem 0',
@@ -31,8 +32,7 @@ export default function SchedulesInformation() {
       <Grid
         container
         direction='column'
-        justifyContent='flex-start'
-        alignItems='flex-start'
+        disableGutters
         spacing={0}
       >
         {/* Schedule 1 */}
