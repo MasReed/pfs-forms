@@ -32,7 +32,6 @@ export default function SchedulesInformation() {
       <Grid
         container
         direction='column'
-        disableGutters
         spacing={0}
       >
         {/* Schedule 1 */}

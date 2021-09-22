@@ -20,8 +20,9 @@ import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    borderRadius: '4px',
-    margin: '3rem 0',
+    borderRadius: '.25rem',
+    boxShadow: theme.shadows[4],
+    margin: '2rem 0',
     padding: '0',
   },
   table: {
@@ -84,12 +85,12 @@ export default function CustomTable ({ rows, colHeadings }) {
       // console.log('losingFocus', e.target)
       // console.log('receivingFocus', e.relatedTarget)
 
-      // target gaining focus is within the cellEditing state element
+      // target gaining focus is within the current cellEditing element
       if (cellEditingElement && cellEditingElement.contains(e.relatedTarget)) {
         // console.log('cellEditing child element in focus')
       }
 
-      // target losing focus is within cell editing state element
+      // target losing focus is within the current cellEditing element
       if (cellEditingElement && cellEditingElement.contains(e.target)) {
         // console.log('cellEditing element in focus')
       }
@@ -255,6 +256,7 @@ export default function CustomTable ({ rows, colHeadings }) {
                   id={`row-${row.id}-description`}
                   scope='row'
                   onClick={handleCellClick}
+                  onKeyPress={handleCellClick}
                   tabIndex={0}
                 >
                   {
@@ -280,6 +282,7 @@ export default function CustomTable ({ rows, colHeadings }) {
                   id={`row-${row.id}-registrant`}
                   scope='row'
                   onClick={handleCellClick}
+                  onKeyPress={handleCellClick}
                   tabIndex={0}
                 >
                 {
@@ -305,6 +308,7 @@ export default function CustomTable ({ rows, colHeadings }) {
                   id={`row-${row.id}-amount`}
                   scope='row'
                   onClick={handleCellClick}
+                  onKeyPress={handleCellClick}
                   tabIndex={0}
                 >
                 {
@@ -328,6 +332,7 @@ export default function CustomTable ({ rows, colHeadings }) {
                   component='td'
                   scope='row'
                   onClick={handleCellClick}
+                  onKeyPress={handleCellClick}
                 >
                   {
                     <>
@@ -337,6 +342,7 @@ export default function CustomTable ({ rows, colHeadings }) {
                             checked={row.retirement}
                             id='retirementChecked'
                             onChange={handleBooleanCellEdit}
+                            onKeyPress={handleBooleanCellEdit}
                             name='retirement'
                           />
                         }
@@ -352,6 +358,7 @@ export default function CustomTable ({ rows, colHeadings }) {
                   id={`row-${row.id}-value`}
                   scope='row'
                   onClick={handleCellClick}
+                  onKeyPress={handleCellClick}
                   tabIndex={0}
                 >
                 {
