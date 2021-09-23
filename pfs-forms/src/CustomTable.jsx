@@ -228,8 +228,6 @@ export default function CustomTable ({ rows, tableObjects }) {
             const isItemSelected = isSelected(row.id)
             const labelId = `table-row-checkbox-${index}`
 
-            console.log('Row:', row)
-
             return(
               <TableRow
                 aria-checked={isItemSelected}
@@ -238,7 +236,6 @@ export default function CustomTable ({ rows, tableObjects }) {
                 id={row.id}
                 role='checkbox'
                 selected={isItemSelected}
-                tabIndex={0}
               >
                 <TableCell
                   component='th'
@@ -253,37 +250,72 @@ export default function CustomTable ({ rows, tableObjects }) {
                 </TableCell>
 
                 {
-                  Object.entries(row).map(([cellKey, cellValue]) => (
+                  Object.entries(row).map(([cellKey, cellValue]) => {
 
-                    cellKey !== 'id' &&
-                    <TableCell
-                      className={classes.cell}
-                      component='td'
-                      id={`row-${row.id}-${cellKey}`}
-                      scope='row'
-                      onClick={handleCellClick}
-                      onKeyPress={handleCellClick}
-                      tabIndex={0}
-                    >
-                      {console.log(cellKey, cellValue)}
+                    const cellHasTableObject = tableObjects.map(object => object.name).includes(cellKey)
 
-                      {
-                        cellEditing.status && (cellEditing.id === `row-${row.id}-${cellKey}`)
-                        ? (<TextField
-                          autoFocus
-                          inputProps={{style: {textTransform: 'capitalize'}}}
-                          name={cellKey}
-                          onChange={handleCellEdit}
-                          value={cellValue}
-                        />)
-                        : (<Typography
-                          variant='body1'
-                        >
-                          {cellValue}
-                        </Typography>)
-                      }
-                    </TableCell>
-                  ))
+                    const matchingTableObject = tableObjects.find(object => object.name === cellKey)
+
+                    const cellType = matchingTableObject && matchingTableObject.type
+
+                  return (
+
+                    cellHasTableObject
+                    ? cellType === 'text'
+                      ? <TableCell
+                        className={classes.cell}
+                        component='td'
+                        id={`row-${row.id}-${cellKey}`}
+                        key={`row-${row.id}-${cellKey}`}
+                        scope='row'
+                        onClick={handleCellClick}
+                        onKeyPress={handleCellClick}
+                        tabIndex={0}
+                      >
+                        {
+                          cellEditing.status && (cellEditing.id === `row-${row.id}-${cellKey}`)
+                          ? (<TextField
+                            autoFocus
+                            inputProps={{style: {textTransform: 'capitalize'}}}
+                            name={cellKey}
+                            onChange={handleCellEdit}
+                            value={cellValue}
+                          />)
+                          : (<Typography
+                            variant='body1'
+                          >
+                            {cellValue}
+                          </Typography>)
+                        }
+                      </TableCell>
+
+                      : <TableCell
+                        component='td'
+                        id={`row-${row.id}-${cellKey}`}
+                        key={`row-${row.id}-${cellKey}`}
+                        scope='row'
+                        onClick={handleCellClick}
+                        onKeyPress={handleCellClick}
+                      >
+                        {
+                          <>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={row.retirement}
+                                  id='retirementChecked'
+                                  onChange={handleBooleanCellEdit}
+                                  onKeyPress={handleBooleanCellEdit}
+                                  name='retirement'
+                                />
+                              }
+                              label='Yes'
+                            />
+                          </>
+                        }
+                      </TableCell>
+                    : null
+                  )})
                 }
               </TableRow>
             )})
