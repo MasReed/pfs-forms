@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '0',
   },
   table: {
+    width: '100%',
   },
   head: {
     backgroundColor: theme.palette.primary.main,
@@ -41,6 +42,8 @@ const useStyles = makeStyles((theme) => ({
   cell: {
     color: theme.palette.secondary.main,
     textTransform: 'capitalize',
+    position: 'relative',
+    height: '100%',
     '&:hover': {
       backgroundColor: `${theme.palette.secondary.main + '40'}`, // Hex Opacity
       boxShadow: `0 0 .25rem .125rem inset ${theme.palette.secondary.main}`,
@@ -49,10 +52,14 @@ const useStyles = makeStyles((theme) => ({
     '&:active': {
       backgroundColor: `${theme.palette.primary.main + '40'}`,
       boxShadow: `0 0 .25rem .125rem inset ${theme.palette.common.white}`,
+      margin: '0',
+      padding: '1rem',
     },
     '&:focus-within': {
       backgroundColor: `${theme.palette.primary.main + '40'}`,
       boxShadow: `0 0 .25rem .125rem inset ${theme.palette.primary.main}`,
+      margin: '0',
+      padding: '0 1rem',
     },
   },
   footer: {
@@ -279,7 +286,22 @@ export default function CustomTable ({ rows, tableObjects }) {
                           cellEditing.status && (cellEditing.id === `row-${row.id}-${cellKey}`)
                           ? (<TextField
                             autoFocus
-                            inputProps={{style: {textTransform: 'capitalize'}}}
+                            fullWidth
+                            inputProps={{ style: {
+                              textTransform: 'capitalize',
+                            }
+                            }}
+                            InputProps={{ style: {
+                              margin: '-0.35rem 0',
+                              padding: '1rem 0',
+                              position: 'absolute',
+                              top: '0px',
+                              bottom: '0px',
+                              left: '0px',
+                              right: '0px',
+                              alignItems: 'center'
+                            }
+                            }}
                             name={cellKey}
                             onChange={handleCellEdit}
                             value={cellValue}
