@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
   },
   headingText: {
-    color: '#fff'
+    color: theme.palette.primary.contrastText,
   },
   body: {
     backgroundColor: '#ccc'
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function CustomTable ({ rows, colHeadings }) {
+export default function CustomTable ({ rows, tableObjects }) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const [selectedRows, setSelectedRows] = useState([])
@@ -205,15 +205,15 @@ export default function CustomTable ({ rows, colHeadings }) {
               />
             </TableCell>
 
-            {/* Generate Column Headings */}
+            {/* Generate Column Headings from tableObjects Prop */}
             {
-              colHeadings.map(heading => (
-                <TableCell key={`column-heading-${heading}`}>
+              tableObjects.map(object => (
+                <TableCell key={`column-heading-${object.name}`}>
                   <Typography
                     className={classes.headingText}
                     variant='subtitle1'
                   >
-                    {heading}
+                    {object.heading}
                   </Typography>
                 </TableCell>
               ))
@@ -236,7 +236,7 @@ export default function CustomTable ({ rows, colHeadings }) {
                 id={row.id}
                 role='checkbox'
                 selected={isItemSelected}
-                tabIndex={-1}
+                tabIndex={0}
               >
                 <TableCell
                   component='th'

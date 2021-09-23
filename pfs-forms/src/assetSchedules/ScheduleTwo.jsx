@@ -25,12 +25,32 @@ export default function ScheduleTwo() {
   const rows = useSelector(state => state.scheduleTwo.rows)
 
   //
-  const columnHeadings = [
-    'Account Description',
-    'Name Registerd In',
-    'Shares or Amount',
-    'Retirement',
-    'Current Value',
+  const tableObjects = [
+    {
+      heading: 'Account Description',
+      name: 'description',
+      type: 'text',
+    },
+    {
+      heading: 'Registered By',
+      name: 'registrant',
+      type: 'text',
+    },
+    {
+      heading: 'Shares or Amount',
+      name: 'amount',
+      type: 'text',
+    },
+    {
+      heading: 'Retirement?',
+      name: 'retirement',
+      type: 'boolean',
+    },
+    {
+      heading: 'Current Value',
+      name: 'value',
+      type: 'text',
+    },
   ]
 
   return (
@@ -41,8 +61,8 @@ export default function ScheduleTwo() {
       </Typography>
 
       <CustomTable
-        colHeadings={columnHeadings}
         rows={rows}
+        tableObjects={tableObjects}
       />
 
     </Box>
