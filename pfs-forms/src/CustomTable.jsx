@@ -228,8 +228,10 @@ export default function CustomTable ({ rows, tableObjects }) {
             const isItemSelected = isSelected(row.id)
             const labelId = `table-row-checkbox-${index}`
 
-            return (
-                <TableRow
+            console.log('Row:', row)
+
+            return(
+              <TableRow
                 aria-checked={isItemSelected}
                 className={classes.row}
                 key={row.id}
@@ -250,134 +252,39 @@ export default function CustomTable ({ rows, tableObjects }) {
                   />
                 </TableCell>
 
-                <TableCell
-                  className={classes.cell}
-                  component='td'
-                  id={`row-${row.id}-description`}
-                  scope='row'
-                  onClick={handleCellClick}
-                  onKeyPress={handleCellClick}
-                  tabIndex={0}
-                >
-                  {
-                    cellEditing.status && (cellEditing.id === `row-${row.id}-description`)
-                    ? (<TextField
-                      autoFocus
-                      inputProps={{style: {textTransform: 'capitalize'}}}
-                      name='description'
-                      onChange={handleCellEdit}
-                      value={row.description}
-                    />)
-                    : (<Typography
-                      variant='body1'
+                {
+                  Object.entries(row).map(([cellKey, cellValue]) => (
+
+                    cellKey !== 'id' &&
+                    <TableCell
+                      className={classes.cell}
+                      component='td'
+                      id={`row-${row.id}-${cellKey}`}
+                      scope='row'
+                      onClick={handleCellClick}
+                      onKeyPress={handleCellClick}
+                      tabIndex={0}
                     >
-                      {row.description}
-                    </Typography>)
-                  }
-                </TableCell>
+                      {console.log(cellKey, cellValue)}
 
-                <TableCell
-                  className={classes.cell}
-                  component='td'
-                  id={`row-${row.id}-registrant`}
-                  scope='row'
-                  onClick={handleCellClick}
-                  onKeyPress={handleCellClick}
-                  tabIndex={0}
-                >
-                {
-                  cellEditing.status && (cellEditing.id === `row-${row.id}-registrant`)
-                  ? (<TextField
-                    autoFocus
-                    inputProps={{style: {textTransform: 'capitalize'}}}
-                    name='registrant'
-                    onChange={handleCellEdit}
-                    value={row.registrant}
-                  />)
-                  : (<Typography
-                    variant='body1'
-                  >
-                    {row.registrant}
-                  </Typography>)
+                      {
+                        cellEditing.status && (cellEditing.id === `row-${row.id}-${cellKey}`)
+                        ? (<TextField
+                          autoFocus
+                          inputProps={{style: {textTransform: 'capitalize'}}}
+                          name={cellKey}
+                          onChange={handleCellEdit}
+                          value={cellValue}
+                        />)
+                        : (<Typography
+                          variant='body1'
+                        >
+                          {cellValue}
+                        </Typography>)
+                      }
+                    </TableCell>
+                  ))
                 }
-                </TableCell>
-
-                <TableCell
-                  className={classes.cell}
-                  component='td'
-                  id={`row-${row.id}-amount`}
-                  scope='row'
-                  onClick={handleCellClick}
-                  onKeyPress={handleCellClick}
-                  tabIndex={0}
-                >
-                {
-                  cellEditing.status && (cellEditing.id === `row-${row.id}-amount`)
-                  ? (<TextField
-                    autoFocus
-                    inputProps={{style: {textTransform: 'capitalize'}}}
-                    name='amount'
-                    onChange={handleCellEdit}
-                    value={row.amount}
-                  />)
-                  : (<Typography
-                    variant='body1'
-                  >
-                    {row.amount}
-                  </Typography>)
-                }
-                </TableCell>
-
-                <TableCell
-                  component='td'
-                  scope='row'
-                  onClick={handleCellClick}
-                  onKeyPress={handleCellClick}
-                >
-                  {
-                    <>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={row.retirement}
-                            id='retirementChecked'
-                            onChange={handleBooleanCellEdit}
-                            onKeyPress={handleBooleanCellEdit}
-                            name='retirement'
-                          />
-                        }
-                        label='Yes'
-                      />
-                    </>
-                  }
-                </TableCell>
-
-                <TableCell
-                  className={classes.cell}
-                  component='td'
-                  id={`row-${row.id}-value`}
-                  scope='row'
-                  onClick={handleCellClick}
-                  onKeyPress={handleCellClick}
-                  tabIndex={0}
-                >
-                {
-                  cellEditing.status && (cellEditing.id === `row-${row.id}-value`)
-                  ? (<TextField
-                    autoFocus
-                    inputProps={{style: {textTransform: 'capitalize'}}}
-                    name='value'
-                    onChange={handleCellEdit}
-                    value={row.value}
-                  />)
-                  : (<Typography
-                    variant='body1'
-                  >
-                    {row.value}
-                  </Typography>)
-                }
-                </TableCell>
-
               </TableRow>
             )})
           }
@@ -425,3 +332,154 @@ export default function CustomTable ({ rows, tableObjects }) {
     </TableContainer>
   )
 }
+
+//
+// <TableRow
+//   aria-checked={isItemSelected}
+//   className={classes.row}
+//   key={row.id}
+//   id={row.id}
+//   role='checkbox'
+//   selected={isItemSelected}
+//   tabIndex={0}
+// >
+//   <TableCell
+//     component='th'
+//     padding='checkbox'
+//     scope='row'
+//   >
+//     <Checkbox
+//       checked={isItemSelected}
+//       inputProps={{ 'aria-labelledby': labelId }}
+//       onClick={(event) => handleRowClick(event, row.id)}
+//     />
+//   </TableCell>
+//
+//   <TableCell
+//     className={classes.cell}
+//     component='td'
+//     id={`row-${row.id}-description`}
+//     scope='row'
+//     onClick={handleCellClick}
+//     onKeyPress={handleCellClick}
+//     tabIndex={0}
+//   >
+//     {
+//       cellEditing.status && (cellEditing.id === `row-${row.id}-description`)
+//       ? (<TextField
+//         autoFocus
+//         inputProps={{style: {textTransform: 'capitalize'}}}
+//         name='description'
+//         onChange={handleCellEdit}
+//         value={row.description}
+//       />)
+//       : (<Typography
+//         variant='body1'
+//       >
+//         {row.description}
+//       </Typography>)
+//     }
+//   </TableCell>
+//
+//   <TableCell
+//     className={classes.cell}
+//     component='td'
+//     id={`row-${row.id}-registrant`}
+//     scope='row'
+//     onClick={handleCellClick}
+//     onKeyPress={handleCellClick}
+//     tabIndex={0}
+//   >
+//   {
+//     cellEditing.status && (cellEditing.id === `row-${row.id}-registrant`)
+//     ? (<TextField
+//       autoFocus
+//       inputProps={{style: {textTransform: 'capitalize'}}}
+//       name='registrant'
+//       onChange={handleCellEdit}
+//       value={row.registrant}
+//     />)
+//     : (<Typography
+//       variant='body1'
+//     >
+//       {row.registrant}
+//     </Typography>)
+//   }
+//   </TableCell>
+//
+//   <TableCell
+//     className={classes.cell}
+//     component='td'
+//     id={`row-${row.id}-amount`}
+//     scope='row'
+//     onClick={handleCellClick}
+//     onKeyPress={handleCellClick}
+//     tabIndex={0}
+//   >
+//   {
+//     cellEditing.status && (cellEditing.id === `row-${row.id}-amount`)
+//     ? (<TextField
+//       autoFocus
+//       inputProps={{style: {textTransform: 'capitalize'}}}
+//       name='amount'
+//       onChange={handleCellEdit}
+//       value={row.amount}
+//     />)
+//     : (<Typography
+//       variant='body1'
+//     >
+//       {row.amount}
+//     </Typography>)
+//   }
+//   </TableCell>
+//
+//   <TableCell
+//     component='td'
+//     scope='row'
+//     onClick={handleCellClick}
+//     onKeyPress={handleCellClick}
+//   >
+//     {
+//       <>
+//         <FormControlLabel
+//           control={
+//             <Checkbox
+//               checked={row.retirement}
+//               id='retirementChecked'
+//               onChange={handleBooleanCellEdit}
+//               onKeyPress={handleBooleanCellEdit}
+//               name='retirement'
+//             />
+//           }
+//           label='Yes'
+//         />
+//       </>
+//     }
+//   </TableCell>
+//
+//   <TableCell
+//     className={classes.cell}
+//     component='td'
+//     id={`row-${row.id}-value`}
+//     scope='row'
+//     onClick={handleCellClick}
+//     onKeyPress={handleCellClick}
+//     tabIndex={0}
+//   >
+//   {
+//     cellEditing.status && (cellEditing.id === `row-${row.id}-value`)
+//     ? (<TextField
+//       autoFocus
+//       inputProps={{style: {textTransform: 'capitalize'}}}
+//       name='value'
+//       onChange={handleCellEdit}
+//       value={row.value}
+//     />)
+//     : (<Typography
+//       variant='body1'
+//     >
+//       {row.value}
+//     </Typography>)
+//   }
+//   </TableCell>
+// </TableRow>
