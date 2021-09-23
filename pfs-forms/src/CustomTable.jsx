@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     textTransform: 'capitalize',
     position: 'relative',
-    height: '100%',
     '&:hover': {
       backgroundColor: `${theme.palette.secondary.main + '40'}`, // Hex Opacity
       boxShadow: `0 0 .25rem .125rem inset ${theme.palette.secondary.main}`,
@@ -300,7 +299,7 @@ export default function CustomTable ({ rows, tableObjects }) {
                             }}
                             InputProps={{
                               style: {
-                                margin: '-0.35rem 0',
+                                margin: '-0.4rem 0',
                                 padding: '1rem 0',
                                 position: 'absolute',
                                 top: '0px',
@@ -317,6 +316,13 @@ export default function CustomTable ({ rows, tableObjects }) {
                           />)
                           : (<Typography
                             variant='body1'
+                            paragraph
+                            style={{
+                              maxWidth: '228px',
+                              padding: '0',
+                              margin: '0',
+                              wordWrap: 'break-word'
+                            }}
                           >
                             {cellValue}
                           </Typography>)
