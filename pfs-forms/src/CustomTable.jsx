@@ -287,20 +287,29 @@ export default function CustomTable ({ rows, tableObjects }) {
                           ? (<TextField
                             autoFocus
                             fullWidth
-                            inputProps={{ style: {
-                              textTransform: 'capitalize',
-                            }
+                            multiline
+                            maxRows='2'
+                            rows='1'
+                            inputProps={{
+                              style: {
+                                textTransform: 'capitalize',
+                              },
+                              type: 'text',
+                              maxLength: '256',
+
                             }}
-                            InputProps={{ style: {
-                              margin: '-0.35rem 0',
-                              padding: '1rem 0',
-                              position: 'absolute',
-                              top: '0px',
-                              bottom: '0px',
-                              left: '0px',
-                              right: '0px',
-                              alignItems: 'center'
-                            }
+                            InputProps={{
+                              style: {
+                                margin: '-0.35rem 0',
+                                padding: '1rem 0',
+                                position: 'absolute',
+                                top: '0px',
+                                bottom: '0px',
+                                left: '0px',
+                                right: '0px',
+                                alignItems: 'center',
+                              },
+                              disableUnderline: true
                             }}
                             name={cellKey}
                             onChange={handleCellEdit}
